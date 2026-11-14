@@ -9,7 +9,6 @@
  */
 public class Tank extends javax.swing.JFrame {
 
-    // 55555 maincontroller reference
     private MainController mainController;
 
     /**
@@ -17,24 +16,22 @@ public class Tank extends javax.swing.JFrame {
      */
     public Tank() {
         initComponents();
-        // 55555 set size
         setSize(600, 500);
+        setupSpinners();
     }
 
-    // 55555 overloaded constructor
     public Tank(MainController mainController) {
         initComponents();
         this.mainController = mainController;
-        // 55555 set size
         setSize(600, 500);
+        setupSpinners();
     }
 
-// +++++++++++ Method to receive messages from the Main Controller
+// +++++++++++ receive messages from the MainController
     public void receiveMessage(String message) {
         txtAreaMsg.append(message + "\n");
     }
 
-    // 55555 position thresholds
     public void setPosition(int value) {
         if (value >= 20) {
             btnShoot.setEnabled(true);
@@ -60,6 +57,9 @@ public class Tank extends javax.swing.JFrame {
             jButton1.setEnabled(false);
         }
     }
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,6 +123,7 @@ public class Tank extends javax.swing.JFrame {
         jSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
         jSlider1.setPaintLabels(true);
         jSlider1.setPaintTicks(true);
+        jSlider1.setValue(80);
 
         txtAreaMsg.setEditable(false);
         txtAreaMsg.setColumns(20);
@@ -134,7 +135,6 @@ public class Tank extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtMsg);
 
         btnSend.setText("Send");
-        // 55555 send action listener
         btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSendActionPerformed(evt);
@@ -248,8 +248,7 @@ public class Tank extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMissileActionPerformed
 
-    // 55555 send button action
-    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         String msg = txtMsg.getText();
         if (!msg.trim().isEmpty()) {
             txtAreaMsg.append("You: " + msg + "\n");
@@ -258,7 +257,7 @@ public class Tank extends javax.swing.JFrame {
             }
             txtMsg.setText("");
         }
-    }
+    }//GEN-LAST:event_btnSendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,4 +313,32 @@ public class Tank extends javax.swing.JFrame {
     private javax.swing.JTextArea txtAreaMsg;
     private javax.swing.JTextArea txtMsg;
     // End of variables declaration//GEN-END:variables
+
+    // 55555 getters for collecting unit info
+    public int getSoldierCount() {
+        return (Integer) spnSoldier.getValue();
+    }
+
+    public int getAmmoCount() {
+        return (Integer) spnAmmo.getValue();
+    }
+
+    public int getFuelAmount() {
+        return jSlider1.getValue();
+    }
+
+    // 55555 set area clear label text
+    public void setAreaClear(boolean clear) {
+        if (clear) {
+            lblArea.setText("Area Cleared");
+        } else {
+            lblArea.setText("Area Not Cleared");
+        }
+    }
+
+    // 55555 set spinner limits up to 1000
+    private void setupSpinners() {
+        spnSoldier.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+        spnAmmo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+    }
 }

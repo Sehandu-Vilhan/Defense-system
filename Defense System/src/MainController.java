@@ -214,14 +214,6 @@ public class MainController extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void chkAreaClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkAreaClearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkAreaClearActionPerformed
-
-    private void btnCollectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollectActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCollectActionPerformed
-
 
 
 
@@ -230,7 +222,7 @@ public class MainController extends javax.swing.JFrame {
 		
 		
 		
-        //  Send privately to only the selected dropdown 
+      
         
         
         String message = txtSendMsg.getText();
@@ -267,6 +259,9 @@ public class MainController extends javax.swing.JFrame {
 
 
 
+
+
+
     // pppppppp position slider change 
     
     private void sliderPositionStateChanged(javax.swing.event.ChangeEvent evt) {
@@ -282,6 +277,13 @@ public class MainController extends javax.swing.JFrame {
             submarine.setPosition(posValue);
         }
     }
+
+
+
+
+
+
+
 
 
 
@@ -345,4 +347,58 @@ public class MainController extends javax.swing.JFrame {
     private javax.swing.JTextArea txtInbox;
     private javax.swing.JTextArea txtSendMsg;
     // End of variables declaration//GEN-END:variables
+
+
+
+
+
+
+
+
+
+    // 55555 collect information button
+    private void btnCollectActionPerformed(java.awt.event.ActionEvent evt) {
+        String selectedUnit = jComboBox1.getSelectedItem().toString();
+        
+        if (selectedUnit.equals("Helicopter")) {
+            lblSoldier.setText("Soldier: " + helicopter.getSoldierCount());
+            lblAmmo.setText("Ammo: " + helicopter.getAmmoCount());
+            lblFuel.setText("Fuel: " + helicopter.getFuelAmount());
+            txtInbox.append("Collected info from Helicopter\n");
+        } else if (selectedUnit.equals("Tank")) {
+            lblSoldier.setText("Soldier: " + tank.getSoldierCount());
+            lblAmmo.setText("Ammo: " + tank.getAmmoCount());
+            lblFuel.setText("Fuel: " + tank.getFuelAmount());
+            txtInbox.append("Collected info from Tank\n");
+        } else if (selectedUnit.equals("Submarine")) {
+            lblSoldier.setText("Soldier: " + submarine.getSoldierCount());
+            lblAmmo.setText("Ammo: " + submarine.getAmmoCount());
+            lblFuel.setText("Fuel: " + submarine.getFuelAmount() + " | Depth: " + submarine.getDepth());
+            txtInbox.append("Collected info from Submarine\n");
+        } else {
+            txtInbox.append("Error: Please select a valid unit from dropdown to collect info.\n");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+
+    // 55555 update area cleared s
+    private void chkAreaClearActionPerformed(java.awt.event.ActionEvent evt) {
+        boolean isClear = chkAreaClear.isSelected();
+        if (helicopter != null) {
+            helicopter.setAreaClear(isClear);
+        }
+        if (tank != null) {
+            tank.setAreaClear(isClear);
+        }
+        if (submarine != null) {
+            submarine.setAreaClear(isClear);
+        }
+    }
 }

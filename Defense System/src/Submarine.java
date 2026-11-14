@@ -9,7 +9,7 @@
  */
 public class Submarine extends javax.swing.JFrame {
 
-    // sssssssssss reference back to the maincontroller to send messages back
+    // sssssssssss the maincontroller to send messages back
     private MainController mainController;
 
     /**
@@ -17,24 +17,37 @@ public class Submarine extends javax.swing.JFrame {
      */
     public Submarine() {
         initComponents();
-        // 55555 set size
         setSize(600, 500);
+        setupSpinners();
     }
     
-    // sssssssssss overloaded constructor so submarine knows its maincontroller reference
+    
+    
+    
+    
+    
+    // sssssssssss overloaded
     public Submarine(MainController mainController) {
         initComponents();
         this.mainController = mainController;
-        // 55555 set size
         setSize(600, 500);
+        setupSpinners();
     }
     
-    // sssssssssss method to receive messages from the main controller and print to jtextarea1 (txtareavern)
+    
+    
+    
+    // sssssssssss method to receive messages from the main controller 
+    
     public void receiveMessage(String message) {
         jTextArea1.append(message + "\n");
     }
 
-    // pppppppppp method to set position value from main controller and update button enabled states based on threshold values
+
+
+
+
+    // pppppppppp method to set position value
     public void setPosition(int value) {
         if (value >= 20) {
             btnShoot.setEnabled(true);
@@ -60,6 +73,15 @@ public class Submarine extends javax.swing.JFrame {
             btnTomahawk.setEnabled(false);
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -327,4 +349,58 @@ public class Submarine extends javax.swing.JFrame {
     private javax.swing.JSpinner spnAmmo;
     private javax.swing.JSpinner spnSoldier;
     // End of variables declaration//GEN-END:variables
+
+
+
+
+
+
+
+
+    // 55555 getters for collecting unit info
+    public int getSoldierCount() {
+        return (Integer) spnSoldier.getValue();
+    }
+
+    public int getAmmoCount() {
+        return (Integer) spnAmmo.getValue();
+    }
+
+    public int getFuelAmount() {
+        return sliderFuel.getValue();
+    }
+
+    public int getDepth() {
+        return jSlider3.getValue();
+    }
+    
+    
+    
+    
+    
+    
+    
+
+    // 55555 set area clear label text
+    public void setAreaClear(boolean clear) {
+        if (clear) {
+            lblArea.setText("Area Cleared");
+        } else {
+            lblArea.setText("Area Not Cleared");
+        }
+    }
+
+
+
+
+
+
+
+
+
+    // 55555 set spinner limits up to 1000
+    private void setupSpinners() {
+        spnSoldier.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+        spnAmmo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+    }
 }
