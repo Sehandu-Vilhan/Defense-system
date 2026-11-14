@@ -10,11 +10,23 @@
  */
 public class Helicopter extends javax.swing.JFrame {
 
+    // 55555 maincontroller reference
+    private MainController mainController;
+
     /**
      * Creates new form Helicopter
      */
     public Helicopter() {
         initComponents();
+        // 55555 set size
+        setSize(600, 500);
+    }
+
+    // 55555 overloaded constructor
+    public Helicopter(MainController mainController) {
+        initComponents();
+        this.mainController = mainController;
+        // 55555 set size
         setSize(600, 500);
     }
 
@@ -127,6 +139,12 @@ public class Helicopter extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtMsg);
 
         btnSend.setText("Send");
+        // 55555 send action listener
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,6 +236,18 @@ public class Helicopter extends javax.swing.JFrame {
     private void chkPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkPositionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chkPositionActionPerformed
+
+    // 55555 send button action
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {
+        String msg = txtMsg.getText();
+        if (!msg.trim().isEmpty()) {
+            txtAreaMsg.append("You: " + msg + "\n");
+            if (mainController != null) {
+                mainController.receiveFromUnit("Helicopter", msg);
+            }
+            txtMsg.setText("");
+        }
+    }
 
     /**
      * @param args the command line arguments

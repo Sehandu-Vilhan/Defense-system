@@ -9,25 +9,57 @@
  */
 public class Tank extends javax.swing.JFrame {
 
+    // 55555 maincontroller reference
+    private MainController mainController;
+
     /**
      * Creates new form Tank
      */
     public Tank() {
         initComponents();
+        // 55555 set size
+        setSize(600, 500);
     }
 
-
-
-
-
+    // 55555 overloaded constructor
+    public Tank(MainController mainController) {
+        initComponents();
+        this.mainController = mainController;
+        // 55555 set size
+        setSize(600, 500);
+    }
 
 // +++++++++++ Method to receive messages from the Main Controller
     public void receiveMessage(String message) {
         txtAreaMsg.append(message + "\n");
     }
 
+    // 55555 position thresholds
+    public void setPosition(int value) {
+        if (value >= 20) {
+            btnShoot.setEnabled(true);
+        } else {
+            btnShoot.setEnabled(false);
+        }
 
+        if (value >= 50) {
+            btnMissile.setEnabled(true);
+        } else {
+            btnMissile.setEnabled(false);
+        }
 
+        if (value >= 60) {
+            btnLaser.setEnabled(true);
+        } else {
+            btnLaser.setEnabled(false);
+        }
+
+        if (value >= 80) {
+            jButton1.setEnabled(true);
+        } else {
+            jButton1.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,6 +134,12 @@ public class Tank extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtMsg);
 
         btnSend.setText("Send");
+        // 55555 send action listener
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         TankFuel.setText("Fuel");
 
@@ -209,6 +247,18 @@ public class Tank extends javax.swing.JFrame {
     private void btnMissileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMissileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMissileActionPerformed
+
+    // 55555 send button action
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {
+        String msg = txtMsg.getText();
+        if (!msg.trim().isEmpty()) {
+            txtAreaMsg.append("You: " + msg + "\n");
+            if (mainController != null) {
+                mainController.receiveFromUnit("Tank", msg);
+            }
+            txtMsg.setText("");
+        }
+    }
 
     /**
      * @param args the command line arguments

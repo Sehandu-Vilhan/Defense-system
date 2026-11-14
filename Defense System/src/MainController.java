@@ -21,9 +21,10 @@ public class MainController extends javax.swing.JFrame {
         initComponents();
         
        
-        helicopter = new Helicopter();
-        tank = new Tank();
-        submarine = new Submarine();
+        // 55555 pass this reference to units
+        helicopter = new Helicopter(this);
+        tank = new Tank(this);
+        submarine = new Submarine(this);
         
         
         
@@ -270,8 +271,15 @@ public class MainController extends javax.swing.JFrame {
     
     private void sliderPositionStateChanged(javax.swing.event.ChangeEvent evt) {
         int posValue = sliderPosition.getValue();
+        // 55555 update all units position
         if (helicopter != null) {
             helicopter.setPosition(posValue);
+        }
+        if (tank != null) {
+            tank.setPosition(posValue);
+        }
+        if (submarine != null) {
+            submarine.setPosition(posValue);
         }
     }
 

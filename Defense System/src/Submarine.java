@@ -17,6 +17,7 @@ public class Submarine extends javax.swing.JFrame {
      */
     public Submarine() {
         initComponents();
+        // 55555 set size
         setSize(600, 500);
     }
     
@@ -24,6 +25,7 @@ public class Submarine extends javax.swing.JFrame {
     public Submarine(MainController mainController) {
         initComponents();
         this.mainController = mainController;
+        // 55555 set size
         setSize(600, 500);
     }
     
