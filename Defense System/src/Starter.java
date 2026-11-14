@@ -1,4 +1,3 @@
-package Starter;
 
 /**
  * Starter pack: opens the Helicopter panel inside its own window.
@@ -11,7 +10,7 @@ public class Starter {
             public void run() {
                 javax.swing.JFrame frame = new javax.swing.JFrame("Helicopter");
                 frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-                frame.add(new Helicopter.Helicopter());
+                frame.add(new Helicopter());
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);

@@ -16,6 +16,19 @@ public class Tank extends javax.swing.JFrame {
         initComponents();
     }
 
+
+
+
+
+
+// +++++++++++ Method to receive messages from the Main Controller
+    public void receiveMessage(String message) {
+        txtAreaMsg.append(message + "\n");
+    }
+
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

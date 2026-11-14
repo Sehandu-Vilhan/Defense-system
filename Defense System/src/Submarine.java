@@ -9,11 +9,54 @@
  */
 public class Submarine extends javax.swing.JFrame {
 
+    // sssssssssss reference back to the maincontroller to send messages back
+    private MainController mainController;
+
     /**
      * Creates new form Submarine
      */
     public Submarine() {
         initComponents();
+        setSize(600, 500);
+    }
+    
+    // sssssssssss overloaded constructor so submarine knows its maincontroller reference
+    public Submarine(MainController mainController) {
+        initComponents();
+        this.mainController = mainController;
+        setSize(600, 500);
+    }
+    
+    // sssssssssss method to receive messages from the main controller and print to jtextarea1 (txtareavern)
+    public void receiveMessage(String message) {
+        jTextArea1.append(message + "\n");
+    }
+
+    // pppppppppp method to set position value from main controller and update button enabled states based on threshold values
+    public void setPosition(int value) {
+        if (value >= 20) {
+            btnShoot.setEnabled(true);
+        } else {
+            btnShoot.setEnabled(false);
+        }
+
+        if (value >= 50) {
+            btnSonar.setEnabled(true);
+        } else {
+            btnSonar.setEnabled(false);
+        }
+
+        if (value >= 60) {
+            btnTorpedo.setEnabled(true);
+        } else {
+            btnTorpedo.setEnabled(false);
+        }
+
+        if (value >= 80) {
+            btnTomahawk.setEnabled(true);
+        } else {
+            btnTomahawk.setEnabled(false);
+        }
     }
 
     /**
@@ -38,7 +81,7 @@ public class Submarine extends javax.swing.JFrame {
         sliderFuel = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
         jSlider3 = new javax.swing.JSlider();
-        jLabel4 = new javax.swing.JLabel();
+        depth = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -84,10 +127,12 @@ public class Submarine extends javax.swing.JFrame {
 
         jLabel3.setText("Fuel");
 
+        jSlider3.setMaximum(1000);
         jSlider3.setOrientation(javax.swing.JSlider.VERTICAL);
         jSlider3.setPaintLabels(true);
+        jSlider3.setValue(800);
 
-        jLabel4.setText("Altitude");
+        depth.setText("depth");
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -99,6 +144,11 @@ public class Submarine extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         btnSend.setText("Send");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,7 +172,7 @@ public class Submarine extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 414, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 425, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
@@ -145,13 +195,10 @@ public class Submarine extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel3))
                             .addComponent(sliderFuel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel4)))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(depth)
+                    .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
@@ -160,9 +207,10 @@ public class Submarine extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(depth)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblArea)
@@ -209,6 +257,18 @@ public class Submarine extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSonarActionPerformed
 
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // sssssssssss logic to send reply message back from submarine to maincontroller
+        String msg = jTextArea2.getText();
+        if (!msg.trim().isEmpty()) {
+            jTextArea1.append("You: " + msg + "\n");
+            if (mainController != null) {
+                mainController.receiveFromUnit("Submarine", msg);
+            }
+            jTextArea2.setText("");
+        }
+    }//GEN-LAST:event_btnSendActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -251,10 +311,10 @@ public class Submarine extends javax.swing.JFrame {
     private javax.swing.JButton btnTomahawk;
     private javax.swing.JButton btnTorpedo;
     private javax.swing.JCheckBox chkPosition;
+    private javax.swing.JLabel depth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider3;

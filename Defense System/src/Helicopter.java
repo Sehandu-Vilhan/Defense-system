@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Helicopter;
+//package Helicopter;
 
 /**
  *
@@ -15,7 +15,45 @@ public class Helicopter extends javax.swing.JFrame {
      */
     public Helicopter() {
         initComponents();
+        setSize(600, 500);
     }
+
+
+// +++++++++++ Method to receive messages from the Main Controller
+    public void receiveMessage(String message) {
+        txtAreaMsg.append(message + "\n");
+    }
+
+    // pppppppppp method to set position value from main controller and update button enabled states based on threshold values
+    public void setPosition(int value) {
+        if (value >= 20) {
+            btnShoot.setEnabled(true);
+        } else {
+            btnShoot.setEnabled(false);
+        }
+
+        if (value >= 50) {
+            btnMissile.setEnabled(true);
+        } else {
+            btnMissile.setEnabled(false);
+        }
+
+        if (value >= 60) {
+            btnLaser.setEnabled(true);
+        } else {
+            btnLaser.setEnabled(false);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,6 +80,8 @@ public class Helicopter extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMsg = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblArea.setText("Area Not Cleared");
 
